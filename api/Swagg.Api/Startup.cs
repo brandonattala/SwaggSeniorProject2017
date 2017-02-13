@@ -13,6 +13,7 @@ namespace Swagg.Api
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            ConfigureHangfire(app); 
         }
     }
 }
