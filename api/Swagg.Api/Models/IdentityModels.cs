@@ -21,7 +21,7 @@ namespace Swagg.Api.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("Swagg", throwIfV1Schema: false)
         {
         }
         
