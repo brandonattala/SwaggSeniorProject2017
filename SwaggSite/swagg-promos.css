@@ -1,0 +1,65 @@
+h1 {
+	color: black;
+	font-size: 60px;
+	margin-bottom: 0px;
+}
+
+.pure-form {
+	margin-bottom: 0px;
+}
+
+:checked + span {
+	
+}
+
+legend {
+	float: right;
+}
+
+.pure-zip {
+	margin-right: 40px;
+}
+
+.pure-button {
+	margin-left: 40px;
+}
+
+table {
+  width: 100%;
+  text-align: left;
+  min-width: 610px;
+}
+
+tr {
+  height: 30px;
+  padding-top: 10px
+}
+tbody { 
+  height: 150px; 
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+th,td,tr,thead,tbody { display: block; }
+td,th { float: left; }
+td:nth-child(1),
+th:nth-child(1) {
+  width: 20%;
+}
+td:nth-child(2),
+th:nth-child(2) {
+  width: 20%;
+  float: left;
+}
+td:nth-child(3),
+th:nth-child(3) {
+  width: 59%;
+  float: left;
+}
+/* some colors */
+thead {
+  background-color: navy;
+  color: white;
+}
+table tbody tr:nth-child(even) {
+  background-color: #dddddd;
+}
