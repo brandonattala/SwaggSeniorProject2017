@@ -5,14 +5,14 @@ namespace Swagg.Api.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Swagg.Api.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Swagg.Api.Models.SwaggDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Swagg.Api.Models.ApplicationDbContext context)
+        protected override void Seed(Swagg.Api.Models.SwaggDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

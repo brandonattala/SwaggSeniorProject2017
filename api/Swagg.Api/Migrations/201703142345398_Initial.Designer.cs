@@ -13,7 +13,7 @@ namespace Swagg.Api.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201702130018367_Initial"; }
+            get { return "201703142345398_Initial"; }
         }
         
         string IMigrationMetadata.Source

@@ -1,19 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Owin;
 using Owin;
+using Hangfire;
+using Swagg.Api.Models;
 
 [assembly: OwinStartup(typeof(Swagg.Api.Startup))]
 
 namespace Swagg.Api
 {
-    public partial class Startup
+    public class Startup
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
-            ConfigureHangfire(app); 
+            using (var db = new SwaggDbContext())
+            {
+                GlobalConfiguration.Configuration.UseSqlServerStorage(db.Database.Connection.ConnectionString);
+            }
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
         }
     }
 }

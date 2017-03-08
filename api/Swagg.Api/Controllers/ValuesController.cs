@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Swagg.Api.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,7 +8,7 @@ using System.Web.Http;
 
 namespace Swagg.Api.Controllers
 {
-    [Authorize]
+    [ApiKeyAuthorize]
     public class ValuesController : ApiController
     {
         // GET api/values
