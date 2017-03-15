@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Text;
 using System.Web.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Swagg.Api;
 using Swagg.Api.Controllers;
 
 namespace Swagg.Api.Tests.Controllers
