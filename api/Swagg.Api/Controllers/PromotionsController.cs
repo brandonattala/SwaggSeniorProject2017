@@ -15,11 +15,18 @@ namespace Swagg.Api.Controllers
     public class PromotionsController : ApiController
     {
         private SwaggDbContext db = new SwaggDbContext();
-
-        // GET: api/Promotions
-        public IQueryable<Promotion> GetPromotions()
+                
+        public IQueryable<Promotion> GetPromotions(int? userId = null, bool? current = null, PromotionCategory? category = null)
         {
-            return db.Promotions;
+            IQueryable<Promotion> query = db.Promotions;
+            if (userId != null)
+                query = query.Where(z => z.UserId == userId);
+            if (current != null)
+                query = query.Where(z => z.Start <= DateTime.Now && z.End >= DateTime.Now);
+            if (category != null)
+                query = query.Where(z => z.Category == category);
+
+            return query;
         }
 
         // GET: api/Promotions/5
