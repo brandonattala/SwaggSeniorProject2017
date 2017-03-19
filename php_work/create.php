@@ -4,12 +4,8 @@
 </head>
 <body>
 
-<!-- ********************************************************************* 
-********************************************************************* -->
 
-<!-- this is to enter a name and have it show up on another page -->
-
-<form action="index.php" method="post">
+<form action="create.php" method="post">
 
 	<br>
 	<br>
@@ -44,7 +40,7 @@
 	<br>
 
 	<input type="submit">
-	<a href="index.php"><button>Cancel</button></a>
+	<a href="index.php">Cancel</a>
 
 </form>
 
@@ -76,8 +72,5 @@
 
 ?>
 
-
-<!-- ********************************************************************* 
-********************************************************************* -->
 </body>
 </html>
