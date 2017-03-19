@@ -26,14 +26,14 @@ namespace Swagg.Api.Controllers
             if (category != null)
                 query = query.Where(z => z.Category == category);
 
-            return query;
+            return query.Include(z => z.Files);
         }
 
         // GET: api/Promotions/5
         [ResponseType(typeof(Promotion))]
         public IHttpActionResult GetPromotion(int id)
         {
-            Promotion promotion = db.Promotions.Find(id);
+            Promotion promotion = db.Promotions.Include(z => z.Files).FirstOrDefault(z => z.PromotionId == id); 
             if (promotion == null)
             {
                 return NotFound();
