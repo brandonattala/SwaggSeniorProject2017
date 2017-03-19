@@ -199,7 +199,12 @@
     <Compile Include="Migrations\201703150016233_Add_Promotion_Table.Designer.cs">
       <DependentUpon>201703150016233_Add_Promotion_Table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703192148094_Add_FileUpload_Table.cs" />
+    <Compile Include="Migrations\201703192148094_Add_FileUpload_Table.Designer.cs">
+      <DependentUpon>201703192148094_Add_FileUpload_Table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\FileUpload.cs" />
     <Compile Include="Models\Promotion.cs" />
     <Compile Include="Models\SwaggDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -262,6 +267,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703150016233_Add_Promotion_Table.resx">
       <DependentUpon>201703150016233_Add_Promotion_Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703192148094_Add_FileUpload_Table.resx">
+      <DependentUpon>201703192148094_Add_FileUpload_Table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

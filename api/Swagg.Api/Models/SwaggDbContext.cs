@@ -18,5 +18,7 @@ namespace Swagg.Api.Models
         }
 
         public DbSet<Promotion> Promotions { get; set; }
+
+        public DbSet<FileUpload> FileUploads { get; set; }
     }
 }

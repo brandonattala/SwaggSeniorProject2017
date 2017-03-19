@@ -20,6 +20,8 @@ namespace Swagg.Api.Models
         public DateTime End { get; set; }
         
         public PromotionCategory Category { get; set; }
+
+        public virtual ICollection<FileUpload> Files { get; set; }
     }
 
     public enum PromotionCategory
