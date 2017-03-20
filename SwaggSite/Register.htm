@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <!-- Header, Title, external elements, and scripts -->
+  <head>
+    <meta charset="utf-8">
+    <title>Swagg</title>
+    
+    <!-- JQuery through web -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- Scripts for page -->
+    <script type="text/javascript">
+      //Uses Ajax and JQuery functionality to adjust elements dynamically
+      $(function(){
+        //Checks that a username and password are entered
+        $("#Submit").click(function(){
+          //variables for form validation
+          var errString = "";
+          var errs = 0;
+
+          //JS variables that contain input field data
+          var email = $("#Email").val();
+          var pass = $("#Pass").val();
+          var conf = $("#Confirm").val();
+
+          //Checks if the username is blank
+          if(email == ""){
+            errString += "Please Enter a Username</br>"
+            errs++;
+          }
+
+          //Checks if the password is blank
+          if(pass == ""){
+            errString += "Please Enter a Password</br>"
+            errs++;
+          }
+          
+          //Checks if confirm password is blank
+          if(conf == ""){
+          	errString += "Please Confirm Your Password</br>"
+          	errs++;
+          }
+          
+          //Checks that the original and confirmation password are equal
+          if(conf != pass){
+           	errString += "Your password and confirmation password are not equal</br>"
+           	errs++;
+           }
+
+          //Informs through a header message if the user needs to correct inputs
+          //Removes header if the inputs are valid
+          if(errs > 0){
+            $("#ErrorMsg").css("display", "");
+            $("#ErrorMsg").html(errString);
+          }else{
+            $("#ErrorMsg").css("display", "none");
+            $("#ErrorMsg").html("");
+            
+            Login(email,pass,conf);
+
+            //Submits the form to go to home if valid input
+            //$("#frmLogin").attr("action", "Home.htm");
+            //$("#frmLogin").submit();
+            
+            
+          }
+        });
+      });
+      
+	  function Login (mail,pass1,pass2){
+		var request = $.ajax({
+			type : 'POST',
+			contentType : 'application/json; charset=utf-8',
+			url : '../api/Account/Register',
+			data : {
+				Email : mail,
+				Password : pass1,
+				ConfirmPassword : pass2
+			}
+		});
+		request.done(function(data){
+			alert(data);
+		});
+		request.success(function(data) {
+			null;
+		});
+	  }
+    </script>
+
+    <!-- Used to enhance the buttons to look a little better than native bootstrap -->
+    <style media="screen">
+      .btn {
+        padding: 14px 24px;
+        border: 0 none;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .btn:focus, .btn:active:focus, .btn.active:focus {
+        outline: 0 none;
+      }
+
+      .btn-primary {
+        background: #0099cc;
+        color: #ffffff;
+      }
+
+      .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+        background: #33a6cc;
+      }
+
+      .btn-primary:active, .btn-primary.active {
+        background: #007299;
+        box-shadow: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Submission buttons and header for page -->
+    <div class="container-fluid fixed-header-page-body clearfix">
+      <div class="row" style="margin-bottom:10px;">
+        <div class="col-xs-12 col-sm-4 col-lg-4">
+          <h1 class="heading">
+            Swagg Register
+          </h1>
+          <span style="color:red"> (Register DEV)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main, Actual fields for input -->
+    <div class="container-fluid">
+      <!-- Hidden div, this is where the alert message is displayed or not depending on user input validation -->
+      <div id="ErrorMsg" class="alert alert-danger" style="display:none"></div>
+
+      <!-- Form for logging in -->
+      <form id="frmLogin" name="frmLogin" class="form form-horizontal" action="#" method="post">
+        <!-- Enter Email -->
+        <div class="form-group">
+          <label for="Email" class="control-label col-sm-4 error text-right"><strong>Email:</strong></label>
+          <div class="form-group col-sm-4">
+            <input type="text" name="Email" id="Email" value="" class="form-control">
+          </div>
+        </div>
+        
+        <!-- Inform user of requirements for Password -->
+        <div class="form-group">
+          <div class="col-sm-1">&nbsp;</div>
+          <div class="form-group text-center col-sm-10">
+         	<span class="">Password requires 1 Capital Letter, 1 number, and 1 Special Symbol ex. #,@,%..etc</span>
+       	  </div>
+        </div>
+
+        <!-- Enter Password -->
+        <div class="form-group">
+          <label for="Pass" class="control-label col-sm-4 error text-right"><strong>Password:</strong></label>
+          <div class="form-group col-sm-4">
+            <input type="password" name="Pass" id="Pass" value="" class="form-control" required="true">
+          </div>
+        </div>
+        
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <label for="Confirm" class="control-label col-sm-4 error text-right"><strong>Confirm Password:</strong></label>
+          <div class="form-group col-sm-4">
+            <input type="password" name="Confirm" id="Confirm" value="" class="form-control" required="true">
+          </div>
+        </div>
+        
+        <!-- Submit form -->
+        <div class="form-group">
+          <div class="form-group col-sm-4 error">&nbsp;</div>
+          <div class="form-group col-sm-4">
+            <a class="btn btn-primary" name="Submit" id="Submit">Sign In</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
