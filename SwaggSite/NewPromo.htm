@@ -31,8 +31,8 @@
         $(".input-group").datepicker();
 
         //Sets the date's to the current date in mm/dd/yyyy format
-        $("#PromoStart").datepicker().datepicker("setDate", new Date());
-        $("#PromoEnd").datepicker().datepicker("setDate", new Date());
+        $("#Start").datepicker().datepicker("setDate", new Date());
+        $("#End").datepicker().datepicker("setDate", new Date());
 
         //Ensures that a description and title are entered before redirecting
         $("#PreviewAd").click(function(){
@@ -41,8 +41,8 @@
           var errs = 0;
 
           //JS variables that contain input field data
-          var title = $("#PromoTitle").val();
-          var desc = $("#PromoDetail").val();
+          var title = $("#Title").val();
+          var desc = $("#Description").val();
 
           //Checks if the title of a promotion is blank
           if(title == ""){
@@ -64,6 +64,9 @@
           }else{
             $("#ErrorMsg").css("display", "none");
             $("#ErrorMsg").html("");
+			
+			
+			$("#frmEdit").submit();
           }
         });
 
@@ -94,6 +97,7 @@
           reader.readAsDataURL(input.files[0]);
         }
       }
+	  
     </script>
 
     <!-- Used to enhance the buttons to look a little better than native bootstrap -->
@@ -137,8 +141,7 @@
         </div>
         <div class="col-xs-12 col-sm-8 col-lg-8 text-right">
           <a href="#" class="btn btn-primary" name="PreviewAd" id="PreviewAd">Preview Ad</a>
-          <a href="Home.htm" class="btn btn-primary">Home</a>
-          <a href="Login.htm" class="btn btn-primary">Sign-out</a>
+          <a href="Index.htm" class="btn btn-primary">Home</a>
         </div>
       </div>
     </div>
@@ -149,20 +152,20 @@
       <div id="ErrorMsg" class="alert alert-danger" style="display:none"></div>
 
       <!-- Form that contains all the neccessary information to post a promotion -->
-      <form id="frmEdit" name="frmEdit" class="form form-horizontal" action="#" method="post">
+      <form id="frmEdit" name="frmEdit" class="form form-horizontal" action="createPromo.php" method="post", enctype="multipart/form-data">
         <!-- Promotion tile -->
         <div class="form-group">
-          <label for="PromoTitle" class="control-label col-sm-4 error text-right"><strong>Promotion Title:</strong></label>
+          <label for="Title" class="control-label col-sm-4 error text-right"><strong>Promotion Title:</strong></label>
           <div class="form-group col-sm-4">
-            <input type="text" name="PromoTitle" id="PromoTitle" value="" class="form-control" placeholder="ex. 50% Funky Friday">
+            <input type="text" name="Title" id="Title" value="" class="form-control" placeholder="ex. 50% Funky Friday">
           </div>
         </div>
 
         <!-- Promotion detail/description -->
         <div class="form-group">
-          <label for="PromoDetail" class="control-label col-sm-4 error text-right"><strong>Promotion Description:</strong></label>
+          <label for="Description" class="control-label col-sm-4 error text-right"><strong>Promotion Description:</strong></label>
           <div class="form-group col-sm-4">
-            <textarea rows="6" name="PromoDetail" id="PromoDetail" class="form-control" placeholder="ex. Tonight from 6-8 you can get 50% off any 1 item."></textarea>
+            <textarea rows="6" name="Description" id="Description" class="form-control" placeholder="ex. Tonight from 6-8 you can get 50% off any 1 item."></textarea>
           </div>
         </div>
 
@@ -182,47 +185,52 @@
 
         <!-- Promotion Datepicker -->
         <div class="form-group">
-          <label for="PromoStart" class="control-label col-sm-4 error text-right"><strong>Promotion Time-Line:</strong></label>
+          <label for="Start" class="control-label col-sm-4 error text-right"><strong>Promotion Time-Line:</strong></label>
           <div class="form-group col-sm-4">
             <div class="input-group input-daterange" id="datepicker">
               <span class="input-group-addon error">Start:</span>
-              <input type="text" name="PromoStart" id="PromoStart" class="form-control text-center">
+              <input type="text" name="Start" id="Start" class="form-control text-center">
               <span class="input-group-addon error">End:</span>
-              <input type="text" name="PromoEnd" id="PromoEnd" class="form-control text-center">
+              <input type="text" name="End" id="End" class="form-control text-center">
             </div>
           </div>
         </div>
 
         <!-- Promotion Category -->
         <div class="form-group">
-          <label for="PromoCat" class="control-label col-sm-4 error text-right"><strong>Repeat Promotion:</strong></label>
+          <label for="Category" class="control-label col-sm-4 error text-right"><strong>Category:</strong></label>
           <div class="form-group col-sm-4">
-            <select class="form-control" name="PromoCat" id="PromoCat">
-              <option value="0">NONE</option>
-              <option value="1">Meal</option>
-              <option value="2">Night</option>
-              <option value="3">Other</option>
+            <select class="form-control" name="Category" id="Category">
+				<option value="breakfast">BREAKFAST</option>
+				<option value="lunch">LUNCH</option>
+				<option value="dinner">DINNER</option>
+				<option value="nightlife">NIGHTLIFE</option>
+				<option value="sales">SALES</option>
+				<option value="local_news">LOCAL NEWS</option>
+				<option value="government">GOVERNMENT</option>
+				<option value="entertainment">ENTERTAINMENT</option>
+				<option value="recreation">RECREATION</option>
             </select>
           </div>
         </div>
 
         <!-- Promotion Repetition -->
-        <div class="form-group">
+<!--         <div class="form-group">
           <label for="PromoRepeat" class="control-label col-sm-4 error text-right"><strong>Repeat Promotion:</strong></label>
           <div class="form-group col-sm-4">
             <input type="checkbox" name="PromoRepeat" id="PromoRepeat">
           </div>
-        </div>
+        </div> -->
 
         <!-- Promotion Frequency -->
-        <div class="form-group" id="showFreq" style="display:none">
+<!--         <div class="form-group" id="showFreq" style="display:none">
           <label for="PromoFreq" class="control-label col-sm-4 error text-right"><strong>Promotion Frequency:</strong></label>
           <div class="form-group col-sm-4">
             <input type="radio" name="PromoFreq" id="PromoFreq" value="0"> Every Day &nbsp;
             <input type="radio" name="PromoFreq" id="PromoFreq" value="1"> Every Week &nbsp;
             <input type="radio" name="PromoFreq" id="PromoFreq" value="2"> Every Month &nbsp;
           </div>
-        </div>
+        </div> -->
       </form>
     </div>
   </body>
