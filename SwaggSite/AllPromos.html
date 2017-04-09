@@ -72,12 +72,19 @@
             $("#CategoryFilter").change(function () {
                 table.draw();
             });
+
+
+            var category = getParameterByName("category");
+            debugger;
+            if (category != '') {
+                var select = document.getElementById("CategoryFilter");
+                select.value = category;
+            }
         });
 
         // Custom datatable filter
         $.fn.dataTable.ext.search.push(
     function (settings, data, dataIndex) {
-        debugger;
         var index = document.getElementById("CategoryFilter").selectedIndex;
         switch (index) {
             case 0:
@@ -124,6 +131,20 @@
         return false;
     }
 );
+        
+
+        // Parses query string
+        function getParameterByName(name, url) {
+            if (!url) {
+                url = window.location.href;
+            }
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
     </script>
 
     <!-- Used to enhance the buttons to look a little better than native bootstrap -->
