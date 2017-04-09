@@ -76,6 +76,13 @@
                 ],
             });
 
+            $('#datatable tbody').on('click', 'tr', function () {
+                var data = table.row(this).data();
+                debugger;
+                var id = data.PromotionId;
+                window.location.href = "Promo.html?id=" + id;
+            });
+
             // Update the table when category changes
             $("#CategoryFilter").change(function () {
                 table.draw();
