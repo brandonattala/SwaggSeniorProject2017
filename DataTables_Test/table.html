@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset='utf-8'/>
+
+		<link href='css/bootstrap.min.css', rel='stylesheet'>
+		<link rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js'></script>
+		<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+		<title>Datatables Example</title>
+	</head>
+	<body>
+		<script src='http://code.jquery.com/jquery.js'></script>
+		<script src='js/bootstrap.min.js'></script>
+		<h2>Datatables Test Page</h2>
+		
+		<br>
+		<br>
+
+
+		<!-- Create the table, -->
+		<!-- This should work with any table that has this class & id -->
+		<table id="example" class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<thead class="filters">
+				<tr>
+					<td>ID</td>
+					<td>Description</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Pizza Hut</td>
+					<td>50% off Large Pizza!</td>
+				</tr>
+				<tr>
+					<td>Papa John's</td>
+					<td>Free Breadsticks W/ Order</td>
+				</tr>
+				<tr>
+					<td>Pizza Planet</td>
+					<td>Free Alien Toy W/ Purchase</td>
+				</tr>
+				<tr>
+					<td>Peppino's</td>
+					<td>Free Cookie Pizza W/ Purchase</td>
+				</tr>
+				<tr>
+					<td>Al's Pancake World</td>
+					<td>50% Pancake Pizza</td>
+				</tr>
+				<tr>
+					<td>Domino's</td>
+					<td>25% Personal Pan Pizza</td>
+				</tr>
+				<tr>
+					<td>Fat Johnny's</td>
+					<td>10% Any Hot Dinner</td>
+				</tr>
+				<tr>
+					<td>Guillermo's Tacos</td>
+					<td>BOGO Fish Tacos</td>
+				</tr>
+				<tr>
+					<td>Gordon Ramsay</td>
+					<td>It's RAW!!!</td>
+				</tr>
+				<tr>
+					<td>Karma Chamelion</td>
+					<td>You Come And Go</td>
+				<tr>
+					<td>Phillip's Place</td>
+					<td>Chickin Wings 25% Off</td>
+				</tr>
+				<tr>
+					<td>Papa John's</td>
+					<td>BOGO 50% Off 1 Medium Pizza</td>
+				</tr>
+				<tr>
+					<td>Pizza Planet</td>
+					<td>YOU ARE A TOY!!!</td>
+				</tr>
+				<tr>
+					<td>Peppino's</td>
+					<td>Buy Any 1 Pizza + Donate $5 To Feed A Child</td>
+				</tr>
+				<tr>
+					<td>Al's Pancake World</td>
+					<td>Indian Food 3.2% Off!</td>
+				</tr>
+				</tr>
+			</tbody>
+		</table>
+																							
+
+		<!-- SCRIPTS REQUIRED FOR DATATABLES AND FUNCTION FOR SEARCH_ALL -->	
+		<!--  -->
+		<script src="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"></script>
+		<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
+		
+		<!-- JS required to make the table into a dataTable -->
+		<script>
+			$(document).ready(function() {
+				// Setup - add a text input to each footer cell
+				$('#example .filters td').each( function () {
+					var title = $('#example thead th').eq( $(this).index() ).text();
+					$(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+				} );
+
+				// DataTable
+				var table = $('#example').DataTable();
+
+				// Apply the search
+				table.columns().eq( 0 ).each( function ( colIdx ) {
+					$( 'input', $('.filters td')[colIdx] ).on( 'keyup change', function () {
+						table
+						.column( colIdx )
+						.search( this.value )
+						.draw();
+					} );
+				} );
+			} );
+		</script>
+	</body>
+</html>
