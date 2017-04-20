@@ -9,13 +9,17 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Swagg.Api.Models;
+using Facebook;
+using Swagg.Api.Integrations;
 
 namespace Swagg.Api.Controllers
 {
     public class PromotionsController : ApiController
     {
+        private const string FbTestToken = @"EAAPlpXZA91DgBALMLj3NU4X7VvwCwc3uXDYeEjvxtwX8QXCty0fz35enEtppZBrR6lJLS8F5JYxjYFbmVyf91H84fcnOH5iUy4v7IMTrCFmNWm7pydGFKNsPco80pSbyZB0G9aCrrs11XUOtQGjOu686T3ZCjtz84Je2sNiFZAwZDZD";
+
         private SwaggDbContext db = new SwaggDbContext();
-                
+
         public IQueryable<Promotion> GetPromotions(int? userId = null, bool? current = null, PromotionCategory? category = null)
         {
             IQueryable<Promotion> query = db.Promotions;
@@ -33,7 +37,7 @@ namespace Swagg.Api.Controllers
         [ResponseType(typeof(Promotion))]
         public IHttpActionResult GetPromotion(int id)
         {
-            Promotion promotion = db.Promotions.Include(z => z.Files).FirstOrDefault(z => z.PromotionId == id); 
+            Promotion promotion = db.Promotions.Include(z => z.Files).FirstOrDefault(z => z.PromotionId == id);
             if (promotion == null)
             {
                 return NotFound();
@@ -56,6 +60,11 @@ namespace Swagg.Api.Controllers
                 return BadRequest();
             }
 
+            foreach(var file in promotion.Files)
+            {
+                file.PromotionId = id;
+                db.Entry(file).State = EntityState.Modified;
+            }
             db.Entry(promotion).State = EntityState.Modified;
 
             try
@@ -82,12 +91,13 @@ namespace Swagg.Api.Controllers
         public IHttpActionResult PostPromotion(Promotion promotion)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             db.Promotions.Add(promotion);
             db.SaveChanges();
+
+            if (promotion.FacebookPost)
+                FacebookUtil.PostPromotion(FbTestToken, promotion);
 
             return CreatedAtRoute("DefaultApi", new { id = promotion.PromotionId }, promotion);
         }

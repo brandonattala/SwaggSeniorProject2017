@@ -4,9 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Swagg</title>
-    <!-- JQuery through web -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
+    
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -16,53 +14,10 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-    <!-- Scripts for page -->
-    <script type="text/javascript">
-      $(function(){
-          $("#PublicView").click(function () {
-              window.location.href = "categories.html";
-          });
-
-          $("#Dashboard").click(function () {
-              debugger;
-              var userId = document.getElementById("UserId").value;
-              var name = document.getElementById("Name").value;
-              window.location.href = "MyPromos.htm?userId=" + userId + "&name=" + name;
-          });
-      });
-    </script>
-
-    <style media="screen">
-        .btn {
-            padding: 14px 24px;
-            border: 0 none;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-            .btn:focus, .btn:active:focus, .btn.active:focus {
-                outline: 0 none;
-            }
-
-        .btn-primary {
-            background: #0099cc;
-            color: #ffffff;
-        }
-
-            .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
-                background: #33a6cc;
-            }
-
-            .btn-primary:active, .btn-primary.active {
-                background: #007299;
-                box-shadow: none;
-            }
-    </style>
+    <link rel="stylesheet" type="text/css" href="site.css">
 </head>
 
 <body>
-
     <div class="container-fluid fixed-header-page-body clearfix">
         <div class="row" style="margin-bottom:10px;">
             <h1>
@@ -74,22 +29,18 @@
     <!-- Main, Actual fields for input -->
     <div class="container-fluid">
 
-        <!-- Form that transfers user to either create a new promo or view created ones -->
-        <form id="frmTransfer" name="frmTransfer" class="form form-horizontal" action="#" method="post">
+        <form id="frmTransferPublic" name="frmTransfer" class="form form-horizontal" action="categories.html" method="get">
             <div class="form-group">
                 <div class="form-group col-sm-4 error">&nbsp;</div>
                 <div class="form-group col-sm-4">
-                    <a class="btn btn-primary" href="#" name="PublicView" id="PublicView">Public View</a>
+                    <input type="submit" class="btn btn-primary" id="PublicView" value="Public View" />
                 </div>
             </div>
+        </form>
+
+        <form id="frmTransferUser" name="frmTransfer" class="form form-horizontal" action="MyPromos.htm" method="get">
             <div class="form-group">
-                <label for="Name" class="control-label col-sm-4 error text-right"><strong>Name:</strong></label>
-                <div class="form-group col-sm-4">
-                    <input type="text" name="Name" id="Name" value="" class="form-control" placeholder="">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="Name" class="control-label col-sm-4 error text-right"><strong>Swagg UserID:</strong></label>
+                <label for="UserId" class="control-label col-sm-4 error text-right"><strong>Swagg UserID:</strong></label>
                 <div class="form-group col-sm-4">
                     <input type="text" name="UserId" id="UserId" value="" class="form-control" placeholder="">
                 </div>
@@ -97,7 +48,7 @@
             <div class="form-group">
                 <div class="form-group col-sm-4 error">&nbsp;</div>
                 <div class="form-group col-sm-4">
-                    <a class="btn btn-primary" href="#" name="Dashboard" id="Dashboard">Go to User Dashboard</a>
+                    <input type="submit" class="btn btn-primary" href="#" id="Dashboard" value="Go to User Dashboard">
                 </div>
             </div>
         </form>
