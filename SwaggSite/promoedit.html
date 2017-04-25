@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <!-- Header, Title, external elements, and scripts -->
 <head>
@@ -24,61 +24,55 @@
     <!-- Used for site wide javascript, in this case table formatting -->
     <!-- IN DEVELOPMENT -->
     <script language="javascript" src="site.js"></script>
+    <link rel="stylesheet" type="text/css" href="site.css">
 
     <!-- Scripts for page -->
     <script type="text/javascript">
         $(function () {
-        	var userId = getParameterByName("userId");
-            var name = getParameterByName("name");
-
-            document.getElementById("userId").value = userId;
-            document.getElementById("name").value = name;
-            
+            var userId = getParameterByName("userId");
             var promoId = getParameterByName("id");
+
             if (promoId != '' && promoId != null) {
                 $.ajax({
-                    url: "singlePromo.php?id=" + promoId,
+                    url: "getpromos.php?id=" + promoId,
                     dataType: 'json',
                     complete: function (data) {
-                        
                         debugger;
-                        //var json = JSON.parse(data.responseText);
-                        //var json = JSON.parse(data.responseText);
-                        
-                        console.log(data);
                         var response = data.responseText;
                         var json = JSON.parse(response);
-                        console.log(json["data"].Title);
                         
-                        var header = document.getElementById("PromoTitle");
-                        header.value = json["data"].Title;
+                        var header = document.getElementById("Title");
+                        header.value = json.Title;
 
-                        var descr = document.getElementById("PromoDetail");
-                        descr.value = json["data"].Description;
+                        var descr = document.getElementById("Description");
+                        descr.value = json.Description;
 
-                        var starts = document.getElementById("PromoStart");
-                        starts.value = json["data"].Start;
+                        var starts = document.getElementById("Start");
+                        starts.value = json.Start;
 
-                        var ends = document.getElementById("PromoEnd");
-                        ends.value = json["data"].End;
+                        var ends = document.getElementById("End");
+                        ends.value = json.End;
 
+                        var id = document.getElementById("PromotionId");
+                        id.value = json.PromotionId;
+
+                        document.getElementById("userId").value = userId;
+
+                        document.getElementById("Category").selectedIndex = json.Category;
+                        
                         $("#showPic").css("display", "");
-                        
-                        //var upload = document.getElementById("PromoPic");
-                        //upload.value = json["data"].Files[0].FileName;
-                        
                         var img = document.getElementById("samplePic");
-                        img.src = "data:image/png;base64," + json["data"].Files[0].FileData;
+                        img.src = "data:image/png;base64," + json.Files[0].FileData;
+
+                        document.getElementById("FileUploadId").value = json.Files[0].FileUploadId;
+                        document.getElementById("FileName").value = json.Files[0].FileName;
+                        document.getElementById("FileData").value = json.Files[0].FileData;
                     }
                 });
             }
             
           	//Uses a JQuery datepicker for better UI
             $(".input-group").datepicker();
-
-            //Sets the date's to the current date in mm/dd/yyyy format
-            $("#Start").datepicker().datepicker("setDate", new Date());
-            $("#End").datepicker().datepicker("setDate", new Date());
 
             //Ensures that a description and title are entered before redirecting
             $("#Submit").click(function (e) {
@@ -122,7 +116,7 @@
                         processData: false,
                         complete: function (data) {
                             debugger;
-                            console.log(data);
+                            window.location.href = "MyPromos.htm?UserId=" + userId;
                         } 
                     });
                 }
@@ -137,19 +131,6 @@
                     $("#showPic").css("display", "");
             });
         });
-        
-        // Parses query string
-        function getParameterByName(name, url) {
-            if (!url) {
-                url = window.location.href;
-            }
-            name = name.replace(/[\[\]]/g, "\\$&");
-            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, " "));
-        }
 
     	//Used to display a preview of the image being uploaded
 	    function readURL(input) {
@@ -163,86 +144,9 @@
 	            reader.readAsDataURL(input.files[0]);
 	        }
 	    }
-
-	    // Parses query string
-	    function getParameterByName(name, url) {
-	        if (!url) {
-	            url = window.location.href;
-	        }
-	        name = name.replace(/[\[\]]/g, "\\$&");
-	        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-	            results = regex.exec(url);
-	        if (!results) return null;
-	        if (!results[2]) return '';
-	        return decodeURIComponent(results[2].replace(/\+/g, " "));
-	    }
 	</script>
 
-	<!-- Used to enhance the buttons to look a little better than native bootstrap -->
-	<style media="screen">
-	    .btn {
-	        padding: 14px 24px;
-	        border: 0 none;
-	        font-weight: 700;
-	        letter-spacing: 1px;
-	        text-transform: uppercase;
-	    }
 	
-	        .btn:focus, .btn:active:focus, .btn.active:focus {
-	            outline: 0 none;
-	        }
-	
-	    .btn-primary {
-	        background: #0099cc;
-	        color: #ffffff;
-	    }
-	
-	        .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
-	            background: #33a6cc;
-	        }
-	
-	        .btn-primary:active, .btn-primary.active {
-	            background: #007299;
-	            box-shadow: none;
-	        }
-	
-	    .modal {
-	        display: none; /* Hidden by default */
-	        position: fixed; /* Stay in place */
-	        z-index: 1; /* Sit on top */
-	        left: 0;
-	        top: 0;
-	        width: 100%; /* Full width */
-	        height: 100%; /* Full height */
-	        overflow: auto; /* Enable scroll if needed */
-	        background-color: rgb(0,0,0); /* Fallback color */
-	        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-	    }
-	
-	    /* Modal Content/Box */
-	    .modal-content {
-	        background-color: #fefefe;
-	        margin: 15% auto; /* 15% from the top and centered */
-	        padding: 20px;
-	        border: 1px solid #888;
-	        width: 60%; /* Could be more or less, depending on screen size */
-	    }
-	
-	    /* The Close Button */
-	    .close {
-	        color: #aaa;
-	        float: right;
-	        font-size: 28px;
-	        font-weight: bold;
-	    }
-	
-	        .close:hover,
-	        .close:focus {
-	            color: black;
-	            text-decoration: none;
-	            cursor: pointer;
-	        }
-	</style>
 </head>
 <body>
 	<!-- Submission buttons and header for page -->
@@ -250,106 +154,93 @@
       <div class="row" style="margin-bottom:10px;">
         <div class="col-xs-12 col-sm-4 col-lg-4">
           <h1 class="heading">
-            PROMO DETAIL
+            Edit Promo
           </h1>
-          <span style="color:red"> (New Promo DEV)</span>
         </div>
         <div class="col-xs-12 col-sm-8 col-lg-8 text-right">
-          <a href="#" class="btn btn-primary" name="Submit" id="Submit">Submit</a>
-          <a href="index.htm" class="btn btn-primary">Home</a>
         </div>
       </div>
     </div>
 
     <!-- Main, Actual fields for input -->
-    <div class="container-fluid">
-      <!-- Hidden div, this is where the alert message is displayed or not depending on user input validation -->
-      <div id="ErrorMsg" class="alert alert-danger" style="display:none"></div>
+        <div class="container-fluid">
+            <!-- Hidden div, this is where the alert message is displayed or not depending on user input validation -->
+            <div id="ErrorMsg" class="alert alert-danger" style="display:none"></div>
 
-      <!-- Form that contains all the neccessary information to post a promotion -->
-      <form id="frmEdit" name="frmEdit" class="form form-horizontal" action="#" method="post">
-      	<input type="hidden" name="userId" id="userId" />
-        <input type="hidden" name="name" id="name"/>
-      	
-        <!-- Promotion tile -->
-        <div class="form-group">
-          <label for="PromoTitle" class="control-label col-sm-4 error text-right"><strong>Promotion Title:</strong></label>
-          <div class="form-group col-sm-4">
-            <input type="text" name="PromoTitle" id="PromoTitle" value="" class="form-control" placeholder="ex. 50% Funky Friday">
-          </div>
+            <!-- Form that contains all the neccessary information to post a promotion -->
+            <form id="frmEdit" name="frmEdit" class="form form-horizontal" enctype="multipart/form-data">
+
+                <input type="hidden" name="userId" id="userId" />
+                <input type="hidden" name="name" id="name" />
+                <input type="hidden" name="PromotionId" id="PromotionId"/>
+                <input type="hidden" name="FileUploadId" id="FileUploadId"/>
+                <input type="hidden" name="FileName" id="FileName" />
+                <input type="hidden" name="FileData" id="FileData" />
+
+                <!-- Promotion tile -->
+                <div class="form-group">
+                    <label for="Title" class="control-label col-sm-4 error text-right"><strong>Promotion Title:</strong></label>
+                    <div class="form-group col-sm-4">
+                        <input type="text" name="Title" id="Title" value="" class="form-control" placeholder="ex. 50% Funky Friday">
+                    </div>
+                </div>
+
+                <!-- Promotion detail/description -->
+                <div class="form-group">
+                    <label for="Description" class="control-label col-sm-4 error text-right"><strong>Promotion Description:</strong></label>
+                    <div class="form-group col-sm-4">
+                        <textarea rows="6" name="Description" id="Description" class="form-control" placeholder="ex. Tonight from 6-8 you can get 50% off any 1 item."></textarea>
+                    </div>
+                </div>
+
+                <!-- Promotion picture -->
+                <div class="form-group">
+                    <label for="PromoPic" class="control-label col-sm-4 error text-right"><strong>Promotion Picture:</strong></label>
+                    <div class="form-group col-sm-4">
+                        <input type="file" name="PromoPic" id="PromoPic" class="form-control" accept="image/*">
+                    </div>
+                </div>
+
+                <!-- Used to hide or show uploaded image -->
+                <div class="form-group" id="showPic" style="display:none">
+                    <div class="col-sm-4">&nbsp;</div>
+                    <img id="samplePic" src="#"  height="200">
+                </div>
+
+                <!-- Promotion Datepicker -->
+                <div class="form-group">
+                    <label for="Start" class="control-label col-sm-4 error text-right"><strong>Promotion Time-Line:</strong></label>
+                    <div class="form-group col-sm-4">
+                        <div class="input-group input-daterange" id="datepicker">
+                            <span class="input-group-addon error">Start:</span>
+                            <input type="text" name="Start" id="Start" class="form-control text-center">
+                            <span class="input-group-addon error">End:</span>
+                            <input type="text" name="End" id="End" class="form-control text-center">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Promotion Category -->
+                <div class="form-group">
+                    <label for="Category" class="control-label col-sm-4 error text-right"><strong>Category:</strong></label>
+                    <div class="form-group col-sm-4">
+                        <select class="form-control" name="Category" id="Category">
+                            <option value="breakfast">BREAKFAST</option>
+                            <option value="lunch">LUNCH</option>
+                            <option value="dinner">DINNER</option>
+                            <option value="nightlife">NIGHTLIFE</option>
+                            <option value="sales">SALES</option>
+                            <option value="local_news">LOCAL NEWS</option>
+                            <option value="government">GOVERNMENT</option>
+                            <option value="entertainment">ENTERTAINMENT</option>
+                            <option value="recreation">RECREATION</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-primary" type="submit" value="Submit" name="Submit" id="Submit">
+                </div>
+            </form>
         </div>
-
-        <!-- Promotion detail/description -->
-        <div class="form-group">
-          <label for="PromoDetail" class="control-label col-sm-4 error text-right"><strong>Promotion Description:</strong></label>
-          <div class="form-group col-sm-4">
-            <textarea rows="6" name="PromoDetail" id="PromoDetail" class="form-control" placeholder="ex. Tonight from 6-8 you can get 50% off any 1 item."></textarea>
-          </div>
-        </div>
-
-        <!-- Promotion picture -->
-        <div class="form-group">
-          <label for="PromoPic" class="control-label col-sm-4 error text-right"><strong>Promotion Picture:</strong></label>
-          <div class="form-group col-sm-4">
-            <input type="file" name="PromoPic" id="PromoPic" class="form-control">
-          </div>
-        </div>
-
-        <!-- Used to hide or show uploaded image -->
-        <div class="form-group" id="showPic" style="display:none">
-          <div class="col-sm-4">&nbsp;</div>
-          <img id="samplePic" src="#">
-        </div>
-
-        <!-- Promotion Datepicker -->
-        <div class="form-group">
-          <label for="PromoStart" class="control-label col-sm-4 error text-right"><strong>Promotion Time-Line:</strong></label>
-          <div class="form-group col-sm-4">
-            <div class="input-group input-daterange" id="datepicker">
-              <span class="input-group-addon error">Start:</span>
-              <input type="text" name="PromoStart" id="PromoStart" class="form-control text-center">
-              <span class="input-group-addon error">End:</span>
-              <input type="text" name="PromoEnd" id="PromoEnd" class="form-control text-center">
-            </div>
-          </div>
-        </div>
-
-        <!-- Promotion Category -->
-        <div class="form-group">
-          <label for="PromoCat" class="control-label col-sm-4 error text-right"><strong>Repeat Promotion:</strong></label>
-          <div class="form-group col-sm-4">
-            <select class="form-control" name="PromoCat" id="PromoCat">
-              <option value="breakfast">BREAKFAST</option>
-              <option value="lunch">LUNCH</option>
-              <option value="dinner">DINNER</option>
-              <option value="nightlife">NIGHTLIFE</option>
-              <option value="sales">SALES</option>
-              <option value="local_news">LOCAL NEWS</option>
-              <option value="government">GOVERNMENT</option>
-              <option value="entertainment">ENTERTAINMENT</option>
-              <option value="recreation">RECREATION</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Promotion Repetition -->
-        <!--- <div class="form-group">
-          <label for="PromoRepeat" class="control-label col-sm-4 error text-right"><strong>Repeat Promotion:</strong></label>
-          <div class="form-group col-sm-4">
-            <input type="checkbox" name="PromoRepeat" id="PromoRepeat">
-          </div>
-        </div> --->
-
-        <!-- Promotion Frequency -->
-        <!--- <div class="form-group" id="showFreq" style="display:none">
-          <label for="PromoFreq" class="control-label col-sm-4 error text-right"><strong>Promotion Frequency:</strong></label>
-          <div class="form-group col-sm-4">
-            <input type="radio" name="PromoFreq" id="PromoFreq" value="0"> Every Day &nbsp;
-            <input type="radio" name="PromoFreq" id="PromoFreq" value="1"> Every Week &nbsp;
-            <input type="radio" name="PromoFreq" id="PromoFreq" value="2"> Every Month &nbsp;
-          </div> --->
-        </div>
-      </form>
-    </div>
   </body>
 </html>

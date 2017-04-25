@@ -21,6 +21,14 @@ namespace Swagg.Api.Models
         
         public PromotionCategory Category { get; set; }
 
+        public bool FacebookPost { get; set; }
+
+        public string FacebookPostId { get; set; }
+
+        public string FacebookAccessToken { get; set; }
+
+        public string HangfireJobId { get; set; }
+
         public virtual ICollection<FileUpload> Files { get; set; }
     }
 
